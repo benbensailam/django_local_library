@@ -34,3 +34,33 @@ def index(request):
 
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
+
+from django.views import generic
+
+class BookListView(generic.ListView):
+    model = Book
+    paginate_by = 2 # Show 2 books per page
+
+    # context_object_name = 'book_list'   # your own name for the list as a template variable
+    # queryset = Book.objects.filter(title__icontains='war')[:5] # Get 5 books containing the title war
+    # template_name = 'books/my_arbitrary_template_name_list.html'  # Specify your own template name/location
+
+    # def get_queryset(self):
+    #     return Book.objects.filter(title__icontains='to')[:3] # Get 3 books containing 'to' in title (case-insensitive)
+    
+    # def get_context_data(self, **kwargs):
+    #     # Call the base implementation first to get a context
+    #     context = super(BookListView, self).get_context_data(**kwargs)
+    #     # Create any data and add it to the context
+    #     context['some_data'] = 'This is just some data'
+    #     return context
+
+class BookDetailView(generic.DetailView):
+    model = Book
+
+class AuthorListView(generic.ListView):
+    model = Author
+    paginate_by = 2 # Show 2 authors per page
+
+class AuthorDetailView(generic.DetailView):
+    model = Author
